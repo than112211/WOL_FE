@@ -1,0 +1,30 @@
+.question__container{
+    display: flex;
+    align-items: center;
+    .question__section{
+        font-size: 1.4rem;
+        width: 50%;
+        margin-right: 2rem;
+        .question__count{
+            margin-bottom: 1rem;
+        }
+    }
+    .answer__section{
+        width: 50%;
+        button{
+            min-width:90%;
+            margin-bottom: 1rem;
+            padding: .4rem 2rem;
+            border: none;
+            border-radius: 6px;
+        }
+    }
+}
+.score{
+    text-align: center;
+    font-size: 2rem;
+    color: seagreen;
+    button{
+        margin-left: 1rem;
+    }
+}

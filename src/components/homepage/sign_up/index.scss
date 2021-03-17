@@ -1,0 +1,13 @@
+@import '../sign_in/index.scss';
+@import '../base.scss';
+
+.modal-footer{
+    p{
+        text-align: center;
+        margin-bottom: 1rem;
+        opacity: .8;
+    }
+}
+.radio__gender,.radio__role{
+    @include displayFlex(space-around,center);
+}

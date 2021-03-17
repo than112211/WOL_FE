@@ -1,0 +1,11 @@
+.quizz{
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+.question {
+    width: 70%;
+    input{
+        width: 100%;
+    }
+}
