@@ -16,6 +16,7 @@ Talker.propTypes = {
 function Talker(props) {
     const history = useHistory();
     const {token} = props;
+    const [search,setSearch] = useState('')
     const [idBought,setidBought] = useState([])
     const [courses,setCourses] = useState([]);
     const [myCourse,setmyCourse] = useState([])
@@ -25,10 +26,11 @@ function Talker(props) {
     }
    
     function handleGetSearch(e){
+        setSearch(e)
     }
     useEffect(() => {
         function getMyCourse() {
-                const url =  'http://localhost:8080/lecture/me';
+                const url =  `http://localhost:8080/lecture/me${search ? `?name=${search}` : ``}`;
                 const option = {
                     method : 'GET',
                     mode : 'cors',
@@ -44,10 +46,10 @@ function Talker(props) {
                 })
         }
         getMyCourse();
-    },[modalMyCourse])
+    },[modalMyCourse,search])
     useEffect(() => {
         function getCourses() {
-                const url = 'http://localhost:8080/lecture/all';
+                const url = `http://localhost:8080/lecture/all${search ? `?name=${search}` : ``}`;
                 const option = {
                     method : 'GET',
                     mode : 'cors',
@@ -62,7 +64,7 @@ function Talker(props) {
                 })
         }
         getCourses();
-    },[modalMyCourse])
+    },[modalMyCourse,search])
   
     return (
         <div>

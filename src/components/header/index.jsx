@@ -66,8 +66,15 @@ function Header(props) {
         console.log(value)
 
 }
+
+
     function handleChangeSearch(e){
-        props.getchangeSearch(e.target.value)
+        if(history.location.pathname === '/talker' || history.location.pathname === '/learner'){
+            props.getchangeSearch(e.target.value)
+        }
+        else {
+            history.replace('/')
+        }
     }
     return (
 

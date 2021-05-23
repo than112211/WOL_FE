@@ -23,7 +23,7 @@ function Learner(props) {
   
     useEffect(() => {
         function getCourses() {
-                const url = `http://localhost:8080/lecture/all`;
+                const url = `http://localhost:8080/lecture/all${search ? `?name=${search}` : ``}`;
                 const option = {
                     method : 'GET',
                     mode : 'cors',
@@ -39,11 +39,11 @@ function Learner(props) {
                 })
         }
         getCourses();
-    },[modalMyCourse])
+    },[modalMyCourse,search])
 
     useEffect(() => {
         function getMyCourse() {
-                const url = `http://localhost:8080/lecture/leaner/me`;
+                const url = `http://localhost:8080/lecture/leaner/me${search ? `?name=${search}` : ``}`;
                 const option = {
                     method : 'GET',
                     mode : 'cors',
@@ -60,7 +60,7 @@ function Learner(props) {
                 })
         }
         getMyCourse();
-    },[modalMyCourse])
+    },[modalMyCourse,search])
     function handleGetSearch(e){
         setSearch(e)
     }
