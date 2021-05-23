@@ -6,6 +6,8 @@ import { useHistory} from 'react-router';
 import {BrowserRouter as Router,Switch, Route,Redirect,Link} from "react-router-dom";
 import Payment from '../talker_page/payment/index'
 import Header from '../header/index'
+import socketIOClient from "socket.io-client";
+
 Learner.propTypes = {
     
 };
@@ -13,14 +15,15 @@ Learner.propTypes = {
 function Learner(props) {
     const [courses,setCourses] = useState([]);
     const [myCourse,setmyCourse] = useState([])
+    const [search,setSearch] = useState('')
     const [modalMyCourse,setmodalMyCourse] = useState(false)
     function hanlegetCourse (e){
         setmodalMyCourse(e)
     }
-
+  
     useEffect(() => {
         function getCourses() {
-                const url = 'http://localhost:8080/lecture/all';
+                const url = `http://localhost:8080/lecture/all`;
                 const option = {
                     method : 'GET',
                     mode : 'cors',
@@ -40,7 +43,7 @@ function Learner(props) {
 
     useEffect(() => {
         function getMyCourse() {
-                const url = 'http://localhost:8080/lecture/leaner/me';
+                const url = `http://localhost:8080/lecture/leaner/me`;
                 const option = {
                     method : 'GET',
                     mode : 'cors',
@@ -58,11 +61,13 @@ function Learner(props) {
         }
         getMyCourse();
     },[modalMyCourse])
-    
+    function handleGetSearch(e){
+        setSearch(e)
+    }
     return (
         <div>
   <div>
-            <Header></Header>
+            <Header getchangeSearch={handleGetSearch}></Header>
            <section className="content">
                    <div className="row">
                        <div className="col-12 col-sm-12 col-md-2">

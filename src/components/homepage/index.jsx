@@ -62,9 +62,9 @@ function Home() {
        <div className="main">
            <div className="img_home">
            <img src="https://design.duolingo.com/images/header/illustration-shape-language.svg" alt=""/>
-
            </div>
-           <Container>
+       <div className="head">
+       <Container>
            <SignIn toggleSignin={toggleSignin} onHanleSubmitSignin={HanlesubmitSignin} modalSignin={modalSignin}></SignIn>
             <SignUp toggleSignup={toggleSignup} onHanleSubmitSignup={hanlesubmitSignup} modalSignup={modalSignup}></SignUp>
 
@@ -82,6 +82,7 @@ function Home() {
 
             </header>
            </Container>
+       </div>
        </div>
     );
 }

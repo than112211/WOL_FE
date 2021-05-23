@@ -9,6 +9,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faPlusCircle,faTimesCircle,faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button } from 'reactstrap';
 library.add(fas,faPlusCircle,faTimesCircle,faCheckCircle)
 
 
@@ -133,7 +134,6 @@ EditQuizz.propTypes = {
             alert('Xóa thành công')
             history.goBack()
             setStatus(false)
-
       }
      
       })
@@ -192,8 +192,8 @@ EditQuizz.propTypes = {
                     <FontAwesomeIcon className="icon__sucess" icon={faCheckCircle} />Chỉnh sửa thành công
                     </div>
            <div className="edit__course">
-                    <button type="submit" >Cập nhật</button> 
-                    <button  onClick={handleDeleteQuizz} >Xóa tất cả</button> 
+                    <Button  type="submit" >Cập nhật</Button> 
+                    <Button  onClick={handleDeleteQuizz} >Xóa tất cả</Button> 
            </div>
            </form>
 

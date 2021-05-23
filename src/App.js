@@ -44,7 +44,7 @@ function App() {
                       else return <Redirect to="/"></Redirect>
                       }}>
             </Route>
-            <Route exact path="/infomation">
+            <Route exact path="/information/:id">
                     <User></User>
             </Route>
             <Route exact path="/lecture/:id">

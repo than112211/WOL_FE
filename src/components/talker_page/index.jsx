@@ -7,6 +7,7 @@ import { useHistory} from 'react-router';
 import {BrowserRouter as Router,Switch, Route,Redirect,Link} from "react-router-dom";
 import Payment from './payment/index'
 import Header from '../header/index'
+import socketIOClient from "socket.io-client";
 
 
 Talker.propTypes = {
@@ -22,9 +23,9 @@ function Talker(props) {
     function hanlegetCourse (e){
         setmodalMyCourse(e)
     }
-
-
-      
+   
+    function handleGetSearch(e){
+    }
     useEffect(() => {
         function getMyCourse() {
                 const url =  'http://localhost:8080/lecture/me';
@@ -40,7 +41,6 @@ function Talker(props) {
                 .then(response => response.json())
                 .then(data => {
                 setmyCourse(data);
-                console.log('Success:', data);
                 })
         }
         getMyCourse();
@@ -59,7 +59,6 @@ function Talker(props) {
                 .then(response => response.json())
                 .then(data => {
                 setCourses(data);
-                console.log('Success:', data);
                 })
         }
         getCourses();
@@ -67,9 +66,10 @@ function Talker(props) {
   
     return (
         <div>
-            <Header ></Header>
-           <section className="container-fluid content">
-                   <div className="row">
+            <Header getchangeSearch={handleGetSearch}></Header>
+           <section className="content">
+                 <div className="container-fluid">
+                 <div className="row">
                        <div className="col-12 col-sm-12 col-md-2">
                             <SideBar token={token} getMyCourse={hanlegetCourse}></SideBar>
                        </div>
@@ -77,6 +77,7 @@ function Talker(props) {
                             <Courses idBought={idBought} disableBuy={true} courses={modalMyCourse ? myCourse : courses}></Courses> 
                        </div>
                    </div>
+                 </div>
            </section>
            
         </div>

@@ -76,10 +76,10 @@ function DoQuizz(props) {
                         </div>
                     </div>
                     <div className="answer__section">
-                        <Button color="success" onClick={() => handleClickAnswer(quizz.length ? quizz[current].answer1.istrue : false)}>{quizz.length ? quizz[current].answer1.char : "Nulll"}</Button>
-                        <Button color="success" onClick={() => handleClickAnswer(quizz.length ? quizz[current].answer2.istrue : false)}>{quizz.length ? quizz[current].answer2.char : "Nulll"}</Button>
-                        <Button color="success" onClick={() => handleClickAnswer(quizz.length ? quizz[current].answer3.istrue : false)}>{quizz.length ? quizz[current].answer3.char : "Nulll"}</Button>
-                        <Button color="success" onClick={() => handleClickAnswer(quizz.length ? quizz[current].answer4.istrue : false)}>{quizz.length ? quizz[current].answer4.char : "Nulll"}</Button>
+                        <Button color="success" onClick={() => handleClickAnswer(quizz.length ? quizz[current].answer1.istrue : false)}>A. {quizz.length ? quizz[current].answer1.char : "Nulll"}</Button>
+                        <Button color="success" onClick={() => handleClickAnswer(quizz.length ? quizz[current].answer2.istrue : false)}>B. {quizz.length ? quizz[current].answer2.char : "Nulll"}</Button>
+                        <Button color="success" onClick={() => handleClickAnswer(quizz.length ? quizz[current].answer3.istrue : false)}>C. {quizz.length ? quizz[current].answer3.char : "Nulll"}</Button>
+                        <Button color="success" onClick={() => handleClickAnswer(quizz.length ? quizz[current].answer4.istrue : false)}>D. {quizz.length ? quizz[current].answer4.char : "Nulll"}</Button>
                     </div>
                    </div>
                 

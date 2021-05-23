@@ -1,6 +1,6 @@
 
 .header {
-    background-color: #1cb0f6;
+    background-color: royalblue;
     .head {
         display: flex;
         justify-content: flex-end;
@@ -62,4 +62,22 @@
 }
 .brand{
     margin-right: auto;
+}
+.search {
+    background-color: white;
+    margin-right: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    padding: .2rem 1rem;
+
+    input{
+        outline: none;
+        width: 18rem;
+        border: none;
+    }
+    svg{
+        color: royalblue;
+    }
 }

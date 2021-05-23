@@ -9,12 +9,14 @@ import Header from '../header/index'
 import ChangePassword from './form_changepass/index'
 import EditInfo from  './form_edit/index'
 import Avartar from './form_avatar/index'
+import { useParams } from 'react-router';
 library.add(fas,faEdit)
 
 User.propTypes = {
     
 };
 function User(props) {
+    const id = useParams()
     const [userinfo,setUserinfo] = useState({});
     const [modalPassword, setModalPassword] = useState(false);
     const togglePassword = () => setModalPassword(!modalPassword);
@@ -24,18 +26,16 @@ function User(props) {
     const [modalAvartar, setmodalAvartar] = useState(false);
     const toggleAvartar = () => setmodalAvartar(!modalAvartar);
     const toggleStatus = () => setStatus(!status);
-
     
-
+    
     useEffect(() => {
         function getUserInfo() {
-                const url = 'http://localhost:8080/user/me';
+                const url = `http://localhost:8080/user/detail/${id.id}`;
                 const option = {
                     method : 'GET',
                     mode : 'cors',
                     headers: {
                         'Content-Type' : 'application/json',
-                        'auth-token' : localStorage.getItem('token')
                     },
                 }
                 fetch(url,option)
@@ -46,7 +46,7 @@ function User(props) {
                 })
         }
         getUserInfo();
-    },[status])
+    },[status,id])
  
     return (
        <div className="">
@@ -60,22 +60,22 @@ function User(props) {
                     <div className="user">
                         <div className="img__infouser">
                             <img src={`http://localhost:8080/${userinfo.avatar}`} alt=""/>
-                            <FontAwesomeIcon className="icon_edit_avatar" onClick={toggleAvartar} icon={faEdit}></FontAwesomeIcon>
+                            <FontAwesomeIcon style={{display: localStorage.getItem('token') == userinfo.token ? 'block' : 'none'}} className="icon_edit_avatar" onClick={toggleAvartar} icon={faEdit}></FontAwesomeIcon>
                         </div>
                         <div className="content__infouser">
                             <h1>{userinfo.name}</h1>
                             <p>Giới tính : {userinfo.gender? 'Nam' : 'Nữ'}</p>
-                            <p>Số điện thoại : {userinfo.phone}</p>
+                            <p>Số điện thoại :{userinfo.phone}</p>
                             <div className="follow__coin">
                                 <div className="follow__user">
                                     Lượt theo dõi : {userinfo.follow}
                                 </div>
-                                <div className="coin__user">
+                                <div className="coin__user" style={{display: localStorage.getItem('token') == userinfo.token ? 'block' : 'none'}}>
                                     Số dư : {userinfo.coin}
                                 </div>
                             </div>
                         </div>
-                        <div className="btn__change">
+                        <div className="btn__change" style={{display: localStorage.getItem('token') == userinfo.token ? 'block' : 'none'}}>
                             <button onClick={toggleEditInfo}>Chỉnh sửa hồ sơ</button>
                             <button onClick={togglePassword}>Đổi mật khẩu</button>
                         </div>
@@ -96,11 +96,11 @@ function User(props) {
                     <h1 className="statistic__title">Thống kê</h1>
                     <div className="row">
                         <div className="col-6 col-sm-6">
-                            <div className="statistic__card posted">
+                            <div className="statistic__card posted" >
                                 Bài đã đăng:
                             </div>
                         </div>
-                        <div className="col-6 col-sm-6">
+                        <div className="col-6 col-sm-6" style={{display: localStorage.getItem('token') == userinfo.token ? 'block' : 'none'}}>
                             <div className="statistic__card revenue">
                                 Doanh thu: 
                             </div>

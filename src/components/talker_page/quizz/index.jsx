@@ -77,19 +77,25 @@ function hanleClickCreateQuizz(){
     return (
         <div>
             <Header></Header>
-            <div className="container">
+           <div className="content__quizz">
+           <div className="container">
+            <form onSubmit={handleSubmit(onSubmit)}>
+
             <div className="create__sucess" style={{display : status ? 'block':'none'}}>
                     <FontAwesomeIcon className="icon__sucess" icon={faCheckCircle} />Tạo thành công
                     </div>
             <div className="create__quizz">
-                <input  type="text" name="" id="input_number_quizz" placeholder="Nhập số câu" />
+                <input  ref={register({ required: true })} type="text" name="" id="input_number_quizz" placeholder="Nhập số câu" />
                 <Button color="primary" onClick={hanleClickCreateQuizz}>Tạo</Button>
             </div>
-       <form onSubmit={handleSubmit(onSubmit)}>
              <FormQuizz number={number}></FormQuizz>
+             <div className="btn__create__quizz">
              <Button color="primary" type="submit" >Tạo trắc nghiệm</Button>{' '}
+
+             </div>
        </form>
             </div>
+           </div>
         </div>
     );
     }

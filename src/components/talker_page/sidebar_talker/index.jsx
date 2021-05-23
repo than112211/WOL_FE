@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import {BrowserRouter as Router,Switch, Route,Redirect,NavLink} from "react-router-dom";
 import './index.scss';
 import Post from './form_post/index'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { faHeart,faThumbsDown } from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 SideBar.propTypes = {
     getMyCourse:PropTypes.func,
@@ -21,10 +25,10 @@ function SideBar(props) {
          <Post togglePost={togglePost}  modalPost={modalPost}></Post>
           
             <ul>
-                <li><NavLink to="/"  onClick={toggleMyCourseHome}>Trang chủ</NavLink ></li>
-                <li style={{display: disablePost ? 'none':'block'}} ><NavLink to="#" onClick={togglePost}>Đăng bài</NavLink ></li>
-                <li><NavLink to="#"  onClick={toggleMyCourse} >Bài học của tôi</NavLink ></li>
-                <li ><NavLink to="/livestream" >Livestream</NavLink ></li>
+                <li><NavLink to="/"  onClick={toggleMyCourseHome}><FontAwesomeIcon icon="home"></FontAwesomeIcon>Trang chủ</NavLink ></li>
+                <li style={{display: disablePost ? 'none':'block'}} ><NavLink to="#" onClick={togglePost}><FontAwesomeIcon icon="upload"></FontAwesomeIcon>Đăng bài</NavLink ></li>
+                <li><NavLink to="#"  onClick={toggleMyCourse} ><FontAwesomeIcon icon="user"></FontAwesomeIcon>Bài học của tôi</NavLink ></li>
+                <li ><NavLink to="#" ><FontAwesomeIcon icon="stream"></FontAwesomeIcon>Phát trực tiếp</NavLink ></li>
             </ul>
         </div>
     );

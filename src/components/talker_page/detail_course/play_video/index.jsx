@@ -17,7 +17,7 @@ function PlayVideo(props) {
         <Modal className="video_play" isOpen={modalvideo} toggle={toggleVideo} >
            <ModalHeader toggle={toggleVideo} >Xem video</ModalHeader>
            <ModalBody className="">
-                   <iframe src={video} frameborder="0"></iframe>
+                   <video src={`${video}#toolbar=0`} allowfullscreen="true" frameborder="0" controls controlsList="nodownload"></video>
            </ModalBody>
      </Modal>
    </div>

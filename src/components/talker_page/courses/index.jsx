@@ -20,7 +20,7 @@ function Courses(props) {
 const [chooseLevel,setChooselevel] = useState('all')
 const [dropdownOpen, setOpen] = useState(false);
 const toggle = () => setOpen(!dropdownOpen);
-const {courses,disableBuy} = props;
+const {courses,disableBuy,search} = props;
 const [id,setID] = useState('')
 const [price,setPrice] = useState(0)
 const [modalChoosePayment,setModalChoosePayment] = useState(false)
@@ -40,7 +40,9 @@ useEffect(() => {
             fetch(url,option)
             .then(response => response.json())
             .then(data => {
+                   if(data.course_bought){
                     setIDBought(data.course_bought);
+                   }
             })
     }
     getUser();
@@ -53,7 +55,6 @@ function checkCourseBought ( id){
     }
 }
 function handleClickBuy(id,price){
-    console.log(price)
     setPrice(price)
     setID(id)
     toggleChoosePayment()
@@ -62,14 +63,16 @@ function handleClickBuy(id,price){
 function handleClickLevel(level){
     setChooselevel(level)
 }
+
+
     return (
       <div className="container card__content">
           <div className="select__level">
-                <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle caret>
+                <ButtonDropdown color="primary" isOpen={dropdownOpen} toggle={toggle} className="btn__select">
+            <DropdownToggle color="primary" caret>
                 {chooseLevel == 'all' ? 'Tất cả' : chooseLevel == 'basic' ? 'Cơ bản' : 'Nâng cao'}
             </DropdownToggle>
-            <DropdownMenu>
+            <DropdownMenu >
                 <DropdownItem onClick={() => handleClickLevel('all')}>Tất cả</DropdownItem>
                 <DropdownItem  onClick={()=> handleClickLevel('basic')}>Cơ bản</DropdownItem>
                 <DropdownItem  onClick={() => handleClickLevel('advanced')}>Nâng cao</DropdownItem>
@@ -90,11 +93,11 @@ function handleClickLevel(level){
                         
                              <p>Gía tiền: {course.price} VNĐ</p>
                              <div className="like-dislike">
-                                     <div className="like">{course.liked}
-                                         <FontAwesomeIcon  style={{color:'red',fontSize:'1.2rem'}} icon={faHeart}></FontAwesomeIcon>
+                                     <div className="like">{course.liked && course.liked.length ? course.liked : 0 }
+                                           <FontAwesomeIcon  style={{color:'red',fontSize:'1.2rem'}} icon={faHeart}></FontAwesomeIcon>
                                      </div>
-                                     <div className="dislike">{course.dislike}
-                                     <FontAwesomeIcon  style={{color:'blue',fontSize:'1.2rem'}}  icon={faThumbsDown}></FontAwesomeIcon>
+                                     <div className="dislike">{course.dislike && course.dislike.length ? course.dislike : 0}
+                                       <FontAwesomeIcon  style={{color:'blue',fontSize:'1.2rem'}}  icon={faThumbsDown}></FontAwesomeIcon>
 
                                      </div>
                              </div>

@@ -1,7 +1,7 @@
 import React, { useState ,useEffect} from 'react';
-import {BrowserRouter as Router,Switch, Route,Redirect,Link} from "react-router-dom";
+import {BrowserRouter as Router,Switch, Route,Redirect,Link, NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import Header from '../../header/index'
 import Quizz from '../quizz/index'
 import './index.scss'
@@ -21,6 +21,7 @@ DetailCourse.propTypes = {
 function DetailCourse(props) {
     const {id} = useParams();
     var i = 1
+    const history = useHistory()
     const [quizz,setQuizz] = useState([])
     const [modalDoQuizz,setModalDoQuizz] = useState(false)
     const toggleDoQuizz = () => setModalDoQuizz(!modalDoQuizz)
@@ -156,6 +157,22 @@ function handleClickDoQuizz(id) {
             toggleDoQuizz()
     })
 }
+function handleDeleteCourse(){
+    const url = `http://localhost:8080/lecture/delete/${id}`;
+    const option = {
+        method : 'DELETE',
+        mode : 'cors',
+        headers: {
+            'Content-Type' : 'application/json',
+        },
+    }
+    fetch(url,option)
+    .then(response => response.json())
+    .then(data => {
+       history.goBack()
+       alert('Xóa thành công')
+    })
+}
     return (
         <div>
             <DoQuizz quizz={quizz} toggleDoQuizz={toggleDoQuizz} modalDoQuizz={modalDoQuizz}></DoQuizz>
@@ -186,14 +203,15 @@ function handleClickDoQuizz(id) {
                         <div className="detail__course">
                             <h1>{detailCourse.title}</h1>
                             <p>{detailCourse.description}</p>
-                            <p>Giá: {detailCourse.price}</p>
+                            <p>Giá: {detailCourse.price} VNĐ</p>
+                            <NavLink to={`/information/${detailCourse.id_user}`}>Xem thông tin tác giả</NavLink>
                             <div className="tuongtac">
-                                <div className="like">Lượt like: {detailCourse.liked}</div>
-                                <div className="dislike">Lượt dislike: {detailCourse.dislike}</div>
-                                <div className="bought">Lượt mua: {detailCourse.bought}</div>
+                                <div className="like">Lượt thích : {detailCourse.liked && detailCourse.liked.length ? detailCourse.liked : 0 }</div>
+                                <div className="dislike">Lượt không thích : {detailCourse.dislike  && detailCourse.liked.length ? detailCourse.dislike : 0}</div>
+                                <div className="bought">Lượt mua : {detailCourse.bought}</div>
 
                             </div>
-                            <p>Ngày tạo: {detailCourse.date_create}</p>
+                            <p>Ngày tạo: {detailCourse.date_create ? detailCourse.date_create.split('T').splice(0,1) : ``}</p>
                         </div>
                     </div>
                 </div>
@@ -209,11 +227,13 @@ function handleClickDoQuizz(id) {
                          </div>
                 <div className="row" style={{display: editCourse ? 'block' : 'none'}}>
                   <div className="edit__course"  >
-                  <button onClick={() => setPlayVideo(detailCourse.video)}>Xem</button>
-                  <button  ><Link to={`/quizz/${detailCourse._id}`}>Tạo trắc nghiệm</Link></button>
-                    <button onClick={toggleEditCourse}>Chỉnh sửa bài học</button>
+                  <Button color="primary" onClick={() => setPlayVideo(detailCourse.video)}>Xem</Button>
+                  <Button color="primary" ><Link  to={`/quizz/${detailCourse._id}`}>Tạo trắc nghiệm</Link></Button>
+                    <Button color="primary" onClick={toggleEditCourse}>Chỉnh sửa bài học</Button>
+                    <Button color="danger" onClick={handleDeleteCourse}>Xóa bài học</Button>
+
                   </div>
-                  <div className="created__quizz">
+                  <div className=" created__quizz">
                       <h3>Bài trắc nghiệm đã tạo</h3>
                         <div className="row number__quizz__created">
                         {createdQuizz.map((created,index) =>{

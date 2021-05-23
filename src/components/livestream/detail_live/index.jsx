@@ -1,23 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
+import { useParams } from 'react-router';
 import './index.scss'
+import socketIOClient from "socket.io-client";
 import Header from '../../header/index'
+import Peer from 'peerjs';
+
 DetailLive.propTypes = {
     
 };
 
 function DetailLive(props) {
-    function handleClickStarLive(){
-        const config ={audio :true,video:true}
-        navigator.mediaDevices.getUserMedia(config)
-       .then(stream =>{
-           const video = document.getElementById('video__create')
-           video.srcObject = stream
-           video.play()
+    const {id} = useParams();
+    var peer = new Peer(undefined, {
+        host: '/',
+        port: '9000',
+        path:'/peerjs'
+      });
+      const myvideo = document.createElement('video')
+
+    useEffect(() => {
+       const io =  socketIOClient('http://localhost:8080',{ transports : ['websocket'] });
+       peer.on('open',idpeer => {
+        io.emit('joinRoom',id,idpeer)
        })
-       .catch()
+       const config ={audio :false,video:true}
+       navigator.mediaDevices.getUserMedia(config)
+      .then(stream =>{
+        addVideoStream(myvideo,stream)
+        io.on('user-connected' ,(userID) =>{
+            connectNewUser(userID,stream)
+        })
+        peer.on('call',call =>{
+            console.log(call)
+            call.answer(stream)
+            call.on('stream',userVideoStream =>{
+                addVideoStream(myvideo,userVideoStream)
+            })
+            
+        })
+         
+      })
+      
+      
+
+  },[])
+   const connectNewUser = (userID,stream) => {
+       const call = peer.call(userID,stream)
+       const video  = document.createElement('video')
+       call.on('stream',userVideoStream =>{
+           addVideoStream(video,userVideoStream)
+       })
+  }
+  const  addVideoStream =  (video,stream) => {
+    const videoGrid = document.getElementById('video__grid')
+        video.srcObject =  stream
+         video.play()
+        videoGrid.append(video)
     }
+
     return (
         <div>
             <Header></Header>
@@ -25,10 +67,10 @@ function DetailLive(props) {
 
                 <div className="row">
                         <div className="col-8 col-sm-8">
-                        <Button color="primary" onClick={handleClickStarLive}>Bắt đầu ngay</Button>
+                            <div  id="video__grid">
 
-                        <video src="" id="video__create">
-                        </video>
+                            </div>
+                        
                         </div>
                         <div className="col-4 col-sm-4">
 
