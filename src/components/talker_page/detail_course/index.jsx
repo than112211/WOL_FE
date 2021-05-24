@@ -13,6 +13,7 @@ import {FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from 'reactstrap';
 import EditCourse from './edit_course/index'
 import DoQuizz from '../../learner_page/do__quizz/index'
+import Report from './form__report';
 library.add(fas,faHeart,faThumbsDown,faTimesCircle,faCheckCircle)
 DetailCourse.propTypes = {
     
@@ -25,6 +26,8 @@ function DetailCourse(props) {
     const [quizz,setQuizz] = useState([])
     const [modalDoQuizz,setModalDoQuizz] = useState(false)
     const toggleDoQuizz = () => setModalDoQuizz(!modalDoQuizz)
+    const [modalReport,setmodalReport] = useState(false)
+    const toggleReport = () => setmodalReport(!modalReport)
     const [createdQuizz,setCreatedQuizz] = useState([])
     const [myCourseLeaner,setMyCourseLeaner] = useState(false)
     const [detailCourse,setDetailCourse] = useState({})
@@ -173,6 +176,7 @@ function handleDeleteCourse(){
        alert('Xóa thành công')
     })
 }
+
     return (
         <div>
             <DoQuizz quizz={quizz} toggleDoQuizz={toggleDoQuizz} modalDoQuizz={modalDoQuizz}></DoQuizz>
@@ -194,6 +198,8 @@ function handleDeleteCourse(){
                                                 </div>
                         </div>
                          <Button className="btn__seevideo" color="primary"  onClick={() => setPlayVideo(detailCourse.video)}>Xem</Button>
+                         <Button className="btn__report" color="danger" onClick={toggleReport} >Báo cáo</Button>
+                        <Report modalReport={modalReport} toggleReport={toggleReport} idcourse={id}></Report>
                         <PlayVideo video={playvideo} modalvideo ={modalVideo} toggleVideo={toggleVideo}></PlayVideo>
                       
 

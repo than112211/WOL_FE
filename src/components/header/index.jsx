@@ -103,6 +103,7 @@ function Header(props) {
 
                     <li><Link to={`/information/${user._id}`}>Thông tin cá nhân</Link></li>
                     <li onClick={togglePayment}>Nạp tiền</li>
+                    <li>Rút tiền</li>
                     <li>Trợ giúp & Hỗ trợ</li>
                     <li onClick={onHanleLogout}>Đăng xuất</li>
                 </ul>

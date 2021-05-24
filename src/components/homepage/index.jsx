@@ -27,9 +27,10 @@ function Home() {
         fetch(url,option)
         .then(response => response.json())
         .then(data => {
-        console.log('Success:', data);
+            alert(data)
+            toggleSignup()
         })
-        console.log(value)
+     
 
     }
     function HanlesubmitSignin(value) {

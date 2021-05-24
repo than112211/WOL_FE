@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useForm } from "react-hook-form";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './index.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 Payment.propTypes = {
     togglePayment:PropTypes.func,
@@ -40,18 +41,25 @@ function Payment(props) {
                     <fieldset id="payment">
                         <div className="recharge">
                             <input type="radio" value="100000" name="payment" checked id="100000"/>
+                            <FontAwesomeIcon icon="coins"></FontAwesomeIcon>
                             <label htmlFor="100000">100.000VNĐ</label>
                         </div>
                         <div className="recharge">
                             <input type="radio" value="200000" name="payment" id="200000"/>
+                            <FontAwesomeIcon icon="coins"></FontAwesomeIcon>
+
                             <label htmlFor="200000">200.000VNĐ</label>
                         </div>
                         <div className="recharge">
                             <input type="radio" value="300000" name="payment" id="300000"/>
+                            <FontAwesomeIcon icon="coins"></FontAwesomeIcon>
+
                             <label htmlFor="300000">300.000VNĐ</label>
                         </div>
                         <div className="recharge">
                             <input type="radio" value="400000" name="payment" id="400000"/>
+                            <FontAwesomeIcon icon="coins"></FontAwesomeIcon>
+
                             <label htmlFor="400000">400.000VNĐ</label>
                         </div>
                       

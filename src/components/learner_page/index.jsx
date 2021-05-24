@@ -55,8 +55,8 @@ function Learner(props) {
                 fetch(url,option)
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data)
                 setmyCourse(data);
-                console.log('Success:', data);
                 })
         }
         getMyCourse();

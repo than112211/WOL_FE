@@ -49,9 +49,9 @@ function SignUp(props) {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <ModalHeader toggle={toggleSignup}>Đăng kí</ModalHeader>
                 <ModalBody>
-                      <input name="fullname" ref={register} placeholder="Họ và tên" />  
+                      <input name="fullname"  ref={register} placeholder="Họ và tên" />  
                       <input name="dob" ref={register({ required: true })} type="date" placeholder="Ngày sinh"  />  
-                      <input name="phonenumber" ref={register({ required: true })}  placeholder="Số điện thoại" />  
+                      <input name="phonenumber" type="number" ref={register({ required: true })}  placeholder="Số điện thoại" />  
                       <input name="email" ref={register({ required: true })}  placeholder="Email" />  
                       <input name="password" ref={register({ required: true })}  placeholder="Mật khẩu" /> 
                       <input name="repassword" ref={register({ required: true })}  placeholder="Nhập lại Mật khẩu" /> 

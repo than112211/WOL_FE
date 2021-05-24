@@ -3,6 +3,7 @@ import './index.scss'
 import PropTypes from 'prop-types';
 import { useForm } from "react-hook-form";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 FormChoosePayment.propTypes = {
     toggleChoosePayment:PropTypes.func,
@@ -20,7 +21,6 @@ function FormChoosePayment(props) {
     }
     function onSubmit(e){
             var status = getMethodPayment()
-            console.log(status)
             const urlMoMo = 'http://localhost:8080/payment/buy'
             const urlCoin ='http://localhost:8080/payment/coin'
             const url =  status ? urlMoMo : urlCoin;
@@ -38,13 +38,15 @@ function FormChoosePayment(props) {
             fetch(url,option)
             .then(response => response.json())
             .then(data => {
-            console.log('Success:', data);
+                toggleChoosePayment()
                     if(status){
                         window.location.href=data.link
                     }
-            })
-            console.log(price)
-        
+                    else {
+                        alert(data)
+
+                    }
+            })        
     }
     return (
         <div>
@@ -54,11 +56,14 @@ function FormChoosePayment(props) {
            <ModalBody className="payment">
                     <fieldset id="payment">
                         <div style={{display: price >= 10000 ? 'flex' : 'none'}} className="recharge">
-                            <input type="radio" value="momo" name="choosepayment" checked id="momo"/>
+                            <input type="radio" value="momo" name="choosepayment"  id="momo"/>
+                            <FontAwesomeIcon icon="credit-card"></FontAwesomeIcon>
                             <label htmlFor="momo">MoMo</label>
                         </div>
                         <div className="recharge">
-                            <input type="radio" value="coin" name="choosepayment" id="coin"/>
+                            <input type="radio" value="coin" checked name="choosepayment" id="coin"/>
+                            <FontAwesomeIcon icon="coins"></FontAwesomeIcon>
+
                             <label htmlFor="coin">Coin</label>
                         </div>                      
                       </fieldset>

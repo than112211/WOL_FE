@@ -63,7 +63,7 @@ function Post(props) {
                 <ModalBody className="lecture__info">
                       <input name="title" ref={register} placeholder="Tiêu đề" />  
                       <input name="description" ref={register({ required: true })} placeholder="Mô tả"  />  
-                      <input name="price" ref={register({ required: true })}  placeholder="Gia tiền" /> 
+                      <input name="price" type="number" ref={register({ required: true })}  placeholder="Giá tiền" /> 
                       <select id="level" name="levellist"  onChange={selectlevelonchange}>
                         <option value="" disabled selected hidden>Chọn level</option>
                         <option value="basic">Cơ bản</option>
