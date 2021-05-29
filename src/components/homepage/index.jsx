@@ -46,11 +46,18 @@ function Home() {
         fetch(url,option)
         .then(response => response.json())
         .then(data => {
-        console.log('Success:', data);
-            if(data.token){
+            console.log(data)
+            if(data.admin){
+                localStorage.setItem('token',data.token)
+                localStorage.setItem('admin',true)
+                history.replace('/admin')
+            }
+            else if(data.token){
+                console.log('chay2')
+
                 localStorage.setItem('token',data.token)
                 localStorage.setItem('role',data.role)
-                if(data.role)
+                 if(data.role)
                     history.replace('/learner')
                     else history.replace('/talker')
             }

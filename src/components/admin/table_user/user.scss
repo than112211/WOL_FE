@@ -1,0 +1,24 @@
+
+.filter__admin{
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .search__admin {
+        margin-top: 4rem;
+        background-color: white;
+        border-radius: 4px;
+        padding: .2rem 1rem;
+        input{
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+        button{
+            margin-left: 1rem;
+        }
+    }
+}
+.filter__reported{
+    margin-top: 4rem;
+}
