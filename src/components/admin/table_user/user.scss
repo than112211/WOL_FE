@@ -22,3 +22,21 @@
 .filter__reported{
     margin-top: 4rem;
 }
+.icon-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg{
+        margin: 0 .4rem;
+        font-size: 1.4rem;
+        &:nth-child(1) {
+            color: blue ;
+        }
+        &:nth-child(2) {
+            color: greenyellow;
+        }
+        &:nth-child(3) {
+            color: red;
+        }
+    }
+}

@@ -4,9 +4,9 @@ import { Table,Button } from 'reactstrap';
 import './user.scss'
 import { useForm } from "react-hook-form";
 import {  Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faLock,faTrash,faEdit} from '@fortawesome/free-solid-svg-icons'
 TableUser.propTypes = {
     
 };
@@ -17,6 +17,11 @@ function TableUser(props) {
     const [modal, setModal] = useState(false);
   const toggle = (id) => {
     setModal(!modal)
+    setID(id)
+  };
+  const [modalLock, setModalLock] = useState(false);
+  const toggleLock = (id) => {
+    setModalLock(!modalLock)
     setID(id)
   };
     const [dropdownSearch, setdropSearch] = useState(false);
@@ -95,6 +100,27 @@ function TableUser(props) {
             setUser(data);
         })
     }
+    function onSubmitLock(event) {
+        const url = `http://localhost:8080/admin/ban`;
+                const option = {
+                    method : 'POST',
+                    mode : 'cors',
+                    headers: {
+                        'Content-Type' : 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id:id,
+                        day:event.day
+                    })
+                }
+                fetch(url,option)
+                .then(response => response.json())
+                .then(data => {
+                    alert(data)
+                    toggleLock()
+                })
+
+    }
     return (
         <div className="table__user">
             <Modal isOpen={modal} toggle={toggle} >
@@ -106,6 +132,35 @@ function TableUser(props) {
           <Button color="primary" onClick={() => handleDeleteAccount(id)}>Đồng ý</Button>{' '}
           <Button color="secondary" onClick={toggle}>Hủy</Button>
         </ModalFooter>
+      </Modal>
+      <Modal isOpen={modalLock} toggle={toggleLock} >
+      <form  onSubmit={handleSubmit(onSubmitLock)}>
+
+        <ModalHeader toggle={toggleLock}>Khóa tài khoản</ModalHeader>
+        <ModalBody>
+        <fieldset id="payment">
+                        <div className="recharge">
+                            <input ref={register} type="radio" value="7" name="day" checked id="7"/>
+                            <label htmlFor="7">7 ngày</label>
+                        </div>
+                        <div className="recharge">
+                            <input ref={register} type="radio" value="14" name="day" id="14"/>
+
+                            <label htmlFor="14">14 ngày</label>
+                        </div>
+                        <div className="recharge">
+                            <input ref={register} type="radio" value="30" name="day" id="30"/>
+                            <label htmlFor="30">30 ngày</label>
+                        </div>
+                      </fieldset>
+               
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" type="submit">Đồng ý</Button>
+          <Button color="secondary" onClick={toggleLock}>Hủy</Button>
+        </ModalFooter>
+        </form>
+
       </Modal>
             <div className="container">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -148,8 +203,7 @@ function TableUser(props) {
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Reported</th>
-                    <th>Lock</th>
-                    <th>Delete</th>
+                    <th>Edit User</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -161,8 +215,12 @@ function TableUser(props) {
                        <td>{user.email}</td>
                        <td>{user.phone}</td>
                        <td>{user.reported}</td>
-                       <td><Button  color="primary">Khóa tài khoản</Button></td>
-                       <td><Button onClick={() => toggle(user._id)} color="danger">Xóa tài khoản</Button></td>
+                       <td className="icon-group">
+                           <FontAwesomeIcon icon={faLock} onClick={() => toggleLock(user._id)}></FontAwesomeIcon>
+                           <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
+                           <FontAwesomeIcon icon={faTrash} onClick={() => toggle(user._id)}></FontAwesomeIcon>
+
+                        </td>
                        </tr>
                    })}
                 

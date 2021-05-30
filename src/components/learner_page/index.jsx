@@ -7,6 +7,7 @@ import {BrowserRouter as Router,Switch, Route,Redirect,Link} from "react-router-
 import Payment from '../talker_page/payment/index'
 import Header from '../header/index'
 import socketIOClient from "socket.io-client";
+import Ban from '../ban/ban'
 
 Learner.propTypes = {
     
@@ -67,6 +68,7 @@ function Learner(props) {
     return (
         <div>
   <div>
+      <Ban></Ban>
             <Header getchangeSearch={handleGetSearch}></Header>
            <section className="content">
                    <div className="row">
