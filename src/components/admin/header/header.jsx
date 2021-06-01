@@ -18,7 +18,6 @@ function Header(props) {
         localStorage.clear();
         history.replace('/')
     }
-    const {onCheckUser} = props;
     useEffect(() => {
         function getUser() {
                 const url = 'http://localhost:8080/user/me';
@@ -33,10 +32,8 @@ function Header(props) {
                 fetch(url,option)
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data)
                 setUser(data);
-                if(onCheckUser){
-                    onCheckUser(data._id)
-                }
                 })
         }
         getUser();

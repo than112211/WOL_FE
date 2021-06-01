@@ -45,16 +45,15 @@ function Home() {
         }
         fetch(url,option)
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
             console.log(data)
             if(data.admin){
-                localStorage.setItem('token',data.token)
-                localStorage.setItem('admin',true)
-                history.replace('/admin')
+               await localStorage.setItem('token',data.token)
+               await localStorage.setItem('admin',true)
+              await  history.replace('/admin')
+
             }
             else if(data.token){
-                console.log('chay2')
-
                 localStorage.setItem('token',data.token)
                 localStorage.setItem('role',data.role)
                  if(data.role)

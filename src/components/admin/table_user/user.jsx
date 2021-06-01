@@ -1,12 +1,15 @@
 import React,{useEffect,useState} from 'react';
 import PropTypes from 'prop-types';
 import { Table,Button } from 'reactstrap';
+import bcrypt from 'bcryptjs'
 import './user.scss'
 import { useForm } from "react-hook-form";
 import {  Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faLock,faTrash,faEdit} from '@fortawesome/free-solid-svg-icons'
+import {BrowserRouter as Router,Switch, Route,Redirect,Link} from "react-router-dom";
+
 TableUser.propTypes = {
     
 };
@@ -20,16 +23,23 @@ function TableUser(props) {
     setID(id)
   };
   const [modalLock, setModalLock] = useState(false);
-  const toggleLock = (id) => {
+  const toggleLock = (id = null) => {
     setModalLock(!modalLock)
     setID(id)
   };
+  const [modalEditDetailUser,setmodalEditDetailUser] = useState(false)
+  const toggleEditDetailUser = (user = {}) => {
+      setmodalEditDetailUser(!modalEditDetailUser)
+      setDetailUser(user)
+  }
+  const [detailUser,setDetailUser]  = useState({})
     const [dropdownSearch, setdropSearch] = useState(false);
     const toggleSearch = () => setdropSearch(!dropdownSearch);
     const [dropdownReport, setdropReport] = useState(false);
     const [choose,setChoose] = useState(true)
     const toggleReport = () => setdropReport(!dropdownReport);
     const [id,setID] = useState('')
+    console.log(detailUser.ban)
     const handleDeleteAccount = (id) => {
         const url = 'http://localhost:8080/admin/user/delete';
         const option = {
@@ -61,6 +71,7 @@ function TableUser(props) {
                 .then(response => response.json())
                 .then(data => {
                 setUser(data);
+                console.log(data)
                 })
         }
         getUser();
@@ -121,8 +132,54 @@ function TableUser(props) {
                 })
 
     }
+    function onSubmitEditUser(event) {
+        console.log(event)
+        const url = `http://localhost:8080/admin/edit/${detailUser._id}`;
+        const option = {
+            method : 'POST',
+            mode : 'cors',
+            headers: {
+                'Content-Type' : 'application/json',
+            },
+            body: JSON.stringify({
+                email:event.email,
+                coin:event.coin,
+                lock:event.lock == 'lock' ? true : false,
+                password:event.password,
+                phone:event.phone
+            })
+        }
+        fetch(url,option)
+        .then(response => response.json())
+        .then(data => {
+            alert(data)
+            toggleEditDetailUser()
+        })
+    }
     return (
         <div className="table__user">
+               <Modal isOpen={modalEditDetailUser} toggle={toggleEditDetailUser} >
+            <form onSubmit={handleSubmit(onSubmitEditUser)}>
+                <ModalHeader toggle={toggleEditDetailUser} >Chỉnh sửa người dùng</ModalHeader>
+                <ModalBody className="lecture__info">
+                    <label htmlFor="">Email</label>
+                      <input name="email" ref={register} defaultValue={detailUser.email} />  
+
+                      <label htmlFor="">Phone</label>
+                      <input name="phone" ref={register} defaultValue={detailUser.phone}  />
+                      <label htmlFor="">Mật khẩu</label>
+                      <input name="password" ref={register} defaultValue={detailUser.password}  />
+                      
+                      <label htmlFor="">Coin</label>
+                      <input name="coin" type="number"ref={register} defaultValue={detailUser.coin} />  
+                   
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="primary" type="submit" >Cập nhật</Button>{' '}
+                  <Button color="secondary" onClick={toggleEditDetailUser}>Hủy</Button>
+                </ModalFooter>
+            </form>
+          </Modal>
             <Modal isOpen={modal} toggle={toggle} >
         <ModalHeader toggle={toggle}>Xóa tài khoản</ModalHeader>
         <ModalBody>
@@ -214,10 +271,10 @@ function TableUser(props) {
                        <td>{user.role ? 'Learner' : 'Talker'}</td>
                        <td>{user.email}</td>
                        <td>{user.phone}</td>
-                       <td>{user.reported}</td>
+                       <td><Link to={`/admin/${user._id}/${user.role}`}>{user.reported}</Link></td>
                        <td className="icon-group">
                            <FontAwesomeIcon icon={faLock} onClick={() => toggleLock(user._id)}></FontAwesomeIcon>
-                           <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
+                           <FontAwesomeIcon icon={faEdit} onClick={() => toggleEditDetailUser(user)}></FontAwesomeIcon>
                            <FontAwesomeIcon icon={faTrash} onClick={() => toggle(user._id)}></FontAwesomeIcon>
 
                         </td>
