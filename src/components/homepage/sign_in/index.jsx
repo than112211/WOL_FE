@@ -37,7 +37,7 @@ function SignIn(props) {
               <ModalHeader toggle={toggleSignin}>Đăng nhập</ModalHeader>
               <ModalBody>
                     <input name="email" ref={register} placeholder="Email..."/>
-                    <input name="password" ref={register({ required: true })} placeholder="Mật khẩu..." />
+                    <input name="password" type="password" ref={register({ required: true })} placeholder="Mật khẩu..." />
               </ModalBody>
               <ModalFooter>
                 <Button color="primary" type="submit" >Đăng nhập</Button>{' '}

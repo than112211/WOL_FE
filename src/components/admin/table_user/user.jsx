@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import {  Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faLock,faTrash,faEdit} from '@fortawesome/free-solid-svg-icons'
+import {faLock,faTrash,faEdit,faUnlockAlt} from '@fortawesome/free-solid-svg-icons'
 import {BrowserRouter as Router,Switch, Route,Redirect,Link} from "react-router-dom";
 
 TableUser.propTypes = {
@@ -25,6 +25,11 @@ function TableUser(props) {
   const [modalLock, setModalLock] = useState(false);
   const toggleLock = (id = null) => {
     setModalLock(!modalLock)
+    setID(id)
+  };
+  const [modalunLock, setModalunLock] = useState(false);
+  const toggleunLock = (id = null) => {
+    setModalunLock(!modalunLock)
     setID(id)
   };
   const [modalEditDetailUser,setmodalEditDetailUser] = useState(false)
@@ -132,6 +137,24 @@ function TableUser(props) {
                 })
 
     }
+    function handleUnlockAccount(id) {
+        const url = `http://localhost:8080/admin/unlock`;
+                const option = {
+                    method : 'POST',
+                    mode : 'cors',
+                    headers: {
+                        'Content-Type' : 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id:id,                    })
+                }
+                fetch(url,option)
+                .then(response => response.json())
+                .then(data => {
+                    alert(data)
+                    toggleunLock()
+                })
+    }
     function onSubmitEditUser(event) {
         console.log(event)
         const url = `http://localhost:8080/admin/edit/${detailUser._id}`;
@@ -190,6 +213,18 @@ function TableUser(props) {
           <Button color="secondary" onClick={toggle}>Hủy</Button>
         </ModalFooter>
       </Modal>
+
+      <Modal isOpen={modalunLock} toggle={toggleunLock} >
+        <ModalHeader toggle={toggleunLock}>Mở khóa tài khoản</ModalHeader>
+        <ModalBody>
+            Bạn có muốn mở khóa tài khoản này ?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={() => handleUnlockAccount(id)}>Đồng ý</Button>{' '}
+          <Button color="secondary" onClick={toggleunLock}>Hủy</Button>
+        </ModalFooter>
+      </Modal>
+
       <Modal isOpen={modalLock} toggle={toggleLock} >
       <form  onSubmit={handleSubmit(onSubmitLock)}>
 
@@ -234,7 +269,7 @@ function TableUser(props) {
                             <DropdownItem onClick={handleChooseEmail}>Email</DropdownItem>
                         </DropdownMenu>
                     </ButtonDropdown>
-                <Button type="submit" color="primary">Tìm kiếm</Button>
+                <Button type="submit" color="primary">Search</Button>
                 </div>
                 <div className="filter__reported">
                 <ButtonDropdown isOpen={dropdownReport} toggle={toggleReport}>
@@ -255,6 +290,7 @@ function TableUser(props) {
                 <thead>
                     <tr>
                     <th>#</th>
+                    <th>Id</th>
                     <th>Name</th>
                     <th>Role</th>
                     <th>Email</th>
@@ -267,15 +303,17 @@ function TableUser(props) {
                    {user.map((user,index) => {
                        return  <tr>
                        <th scope="row">{index+1}</th>
+                       <td>{user._id}</td>
                        <td>{user.name}</td>
                        <td>{user.role ? 'Learner' : 'Talker'}</td>
                        <td>{user.email}</td>
                        <td>{user.phone}</td>
                        <td><Link to={`/admin/${user._id}/${user.role}`}>{user.reported}</Link></td>
                        <td className="icon-group">
-                           <FontAwesomeIcon icon={faLock} onClick={() => toggleLock(user._id)}></FontAwesomeIcon>
-                           <FontAwesomeIcon icon={faEdit} onClick={() => toggleEditDetailUser(user)}></FontAwesomeIcon>
-                           <FontAwesomeIcon icon={faTrash} onClick={() => toggle(user._id)}></FontAwesomeIcon>
+                           <FontAwesomeIcon className="icon-lock" icon={faUnlockAlt} style={{display:user.ban.baned ? 'none' : 'block'}} onClick={() => toggleLock(user._id)}></FontAwesomeIcon>
+                           <FontAwesomeIcon className="icon-unlock" icon={faLock} style={{display:user.ban.baned ? 'block' : 'none'}} onClick={() => toggleunLock(user._id)}></FontAwesomeIcon>
+                           <FontAwesomeIcon className="icon-edit"icon={faEdit} onClick={() => toggleEditDetailUser(user)}></FontAwesomeIcon>
+                           <FontAwesomeIcon className="icon-delete" icon={faTrash} onClick={() => toggle(user._id)}></FontAwesomeIcon>
 
                         </td>
                        </tr>

@@ -29,14 +29,17 @@
     svg{
         margin: 0 .4rem;
         font-size: 1.4rem;
-        &:nth-child(1) {
-            color: blue ;
-        }
-        &:nth-child(2) {
-            color: greenyellow;
-        }
-        &:nth-child(3) {
-            color: red;
-        }
+    }
+    .icon-lock {
+        color: greenyellow ;
+    }
+    .icon-unlock {
+        color: blue;
+    }
+    .icon-delete {
+        color: red;
+    }
+    .icon-edit {
+        color: grey
     }
 }

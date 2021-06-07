@@ -51,8 +51,10 @@ function Post(props) {
     fetch(url,option)
     .then(response => response.json())
     .then(data => {
-    setStatus(true)
-    console.log('Success:', data);
+    if(data == 'Tạo thành công'){
+        setStatus(true)
+    }
+    else alert(data)
     })
     }
     return (

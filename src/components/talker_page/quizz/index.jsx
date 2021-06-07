@@ -90,7 +90,7 @@ function hanleClickCreateQuizz(){
             </div>
              <FormQuizz number={number}></FormQuizz>
              <div className="btn__create__quizz">
-             <Button color="primary" type="submit" >Tạo trắc nghiệm</Button>{' '}
+             <Button color="primary" type="submit" style={{display: number > 0 ? 'block' : 'none'}} >Tạo trắc nghiệm</Button>{' '}
 
              </div>
        </form>

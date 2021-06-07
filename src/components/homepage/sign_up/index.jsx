@@ -53,8 +53,8 @@ function SignUp(props) {
                       <input name="dob" ref={register({ required: true })} type="date" placeholder="Ngày sinh"  />  
                       <input name="phonenumber" type="number" ref={register({ required: true })}  placeholder="Số điện thoại" />  
                       <input name="email" ref={register({ required: true })}  placeholder="Email" />  
-                      <input name="password" ref={register({ required: true })}  placeholder="Mật khẩu" /> 
-                      <input name="repassword" ref={register({ required: true })}  placeholder="Nhập lại Mật khẩu" /> 
+                      <input name="password" type="password" ref={register({ required: true })}  placeholder="Mật khẩu" /> 
+                      <input name="repassword" type="password" ref={register({ required: true })}  placeholder="Nhập lại Mật khẩu" /> 
                       <fieldset id="gender">
                         <input type="radio" value="value1" name="gender" id="gendermale"/>
                         <label htmlFor="gendermale">Nam</label>
